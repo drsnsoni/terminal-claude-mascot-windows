@@ -37,7 +37,7 @@ pythonw $HOME\.claude\clawd_overlay_win.py --corner tr --scale 2 --always
 taskkill /f /fi "WINDOWTITLE eq clawd-overlay"                  # stop it
 ```
 
-It takes the same options as the macOS overlay (below). `--scale` is in points and follows your display scaling. Terminals `--track-terminal` recognizes: Windows Terminal, conhost (cmd/PowerShell), WezTerm, Alacritty, mintty (Git Bash), Hyper, Tabby, Warp, Ghostty. Only one overlay runs at a time; a second launch exits immediately.
+It takes the same options as the macOS overlay (below). `--scale` is in points (default 4) and follows your display scaling. Terminals `--track-terminal` recognizes: Windows Terminal, conhost (cmd/PowerShell), WezTerm, Alacritty, mintty (Git Bash), Hyper, Tabby, Warp, Ghostty. Only one overlay runs at a time; a second launch exits immediately.
 
 Uninstall: remove the `statusLine` block and the `clawd_hook.py` hook entries from `settings.json` (or restore the backup), then delete `clawd_*.py` and `clawd_state` from `%USERPROFILE%\.claude\`.
 
