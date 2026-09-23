@@ -21,7 +21,7 @@ Options:
   --margin-x N           horizontal margin from that corner, pt (default 40)
   --margin-y N           vertical margin, pt (default 90 — clears input box)
   --x N --y N            absolute position (bottom-left origin), overrides corner
-  --scale N              pixel size in pt (default 4; 3 = smaller, 5 = bigger)
+  --scale N              pixel size in pt (default 5; 4 = smaller, 6 = bigger)
   --lane N               walking lane width in pixels (default 40)
   --always               animate even when Claude is idle
   --action NAME          play only this action instead of cycling: walk,
@@ -341,7 +341,7 @@ def parse_args():
     ap.add_argument("--margin-y", type=float, default=90)
     ap.add_argument("--x", type=float)
     ap.add_argument("--y", type=float)
-    ap.add_argument("--scale", type=float, default=4)
+    ap.add_argument("--scale", type=float, default=5)
     ap.add_argument("--lane", type=int, default=40)
     ap.add_argument("--always", action="store_true")
     ap.add_argument("--action", choices=ACTIONS)
