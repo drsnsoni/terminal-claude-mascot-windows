@@ -176,14 +176,17 @@ def main():
 
     art_lines = render_lines(grid, art_w)
 
+    # Claude Code trims leading whitespace from each statusline line, which
+    # would drop the art-only lines to the left edge. Starting every line
+    # with an (invisible) reset escape keeps the padding intact.
     try:
         for i, art_line in enumerate(art_lines):
             if show_label and i == 0:
                 gap = max(cols - text_visible_len - art_w, 1)
-                print(f"  {style}{text_label}{reset}{' ' * gap}{art_line}")
+                print(f"{reset}  {style}{text_label}{reset}{' ' * gap}{art_line}")
             else:
                 gap = max(cols - art_w, 0)
-                print(f"{' ' * gap}{art_line}")
+                print(f"{reset}{' ' * gap}{art_line}")
     except BrokenPipeError:
         pass
 
