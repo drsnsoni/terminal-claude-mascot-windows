@@ -10,6 +10,8 @@ the label also shows the spinner glyph and a verb ("✶ Clauding…").
 When Claude is idle, Clawd stands still and blinks.
 
 Pin one action:  python clawd_statusline.py --action spinner
+Label only:      python clawd_statusline.py --no-art   (used when the
+                 overlay crab sits on top of the input box instead)
 
 How it animates: Claude Code re-runs the statusline command after each
 assistant message and, with "refreshInterval": 1 in the statusLine
@@ -145,7 +147,9 @@ def main():
     now = time.time()
     frame = int(now / FRAME_SECS)
     working = claude_is_working()
-    pinned = sys.argv[2] if len(sys.argv) > 2 and sys.argv[1] == "--action" else None
+    args = sys.argv[1:]
+    pinned = args[args.index("--action") + 1] if "--action" in args[:-1] else None
+    no_art = "--no-art" in args
     action = pinned if pinned in ACTIONS else ACTIONS[int(now // ACTION_SECS) % len(ACTIONS)]
     grid = build_scene(action, frame, LANE, idle=not working).grid
 
@@ -167,6 +171,12 @@ def main():
     #   wide   -> model/ctx label on the left, art on the right edge
     #   medium -> art only, right-aligned (label wouldn't fit)
     #   narrow -> art only, clipped to the terminal width
+    if no_art:
+        try:
+            print(f"{reset}  {style}{text_label}{reset}")
+        except BrokenPipeError:
+            pass
+        return
     if cols >= text_visible_len + LANE + 2:
         art_w, show_label = LANE, True
     elif cols >= LANE:

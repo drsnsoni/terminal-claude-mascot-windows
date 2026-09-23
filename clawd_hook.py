@@ -9,6 +9,7 @@ Calling Python with absolute paths works the same in all of them.
   clawd_hook.py working            write "working" to ~/.claude/clawd_state
   clawd_hook.py idle               write "idle"
   clawd_hook.py start-overlay      launch clawd_overlay_win.py --follow-claude
+                                   --track-terminal (crab on top of the input box)
                                    (detached, no console) unless already running
 """
 
@@ -55,7 +56,7 @@ def start_overlay():
     # fall back if the job doesn't allow breakaway.
     for flags in (base | CREATE_BREAKAWAY_FROM_JOB, base):
         try:
-            subprocess.Popen([exe, OVERLAY, "--follow-claude"],
+            subprocess.Popen([exe, OVERLAY, "--follow-claude", "--track-terminal"],
                              creationflags=flags, close_fds=True,
                              stdin=subprocess.DEVNULL,
                              stdout=subprocess.DEVNULL,

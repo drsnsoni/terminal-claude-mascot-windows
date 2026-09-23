@@ -30,7 +30,10 @@ Options:
   --state PATH           state file to watch (default ~/.claude/clawd_state)
   --follow-claude        auto-quit ~15s after the last claude.exe exits
   --follow-name NAME     process name to follow (default claude.exe)
-  --track-terminal       stick to the bottom-right of the focused terminal window
+  --track-terminal       stick to the focused terminal window, bottom-right,
+                         sitting on top of Claude Code's input box
+  --input-offset N       with --track-terminal: gap from the window's bottom edge
+                         to the crab's feet, pt (default 100 = top of input box)
   --follow-terminal      auto-quit ~15s after all terminal apps are closed
 
 Stop it:  taskkill /f /fi "WINDOWTITLE eq clawd-overlay"
@@ -307,8 +310,8 @@ class Overlay:
         if r is None:
             self.hide()
         else:
-            margin = round(12 * self.dpi)
-            input_margin = round(60 * self.dpi)   # clear Claude Code's input box
+            margin = round(24 * self.dpi)
+            input_margin = round(self.cfg.input_offset * self.dpi)   # top of input box
             x = r.right - self.w - margin
             y = r.bottom - input_margin - self.h
             self.root.geometry(f"+{x}+{y}")
@@ -346,6 +349,7 @@ def parse_args():
     ap.add_argument("--follow-claude", action="store_true")
     ap.add_argument("--follow-name", default="claude.exe")
     ap.add_argument("--track-terminal", action="store_true")
+    ap.add_argument("--input-offset", type=float, default=100)
     ap.add_argument("--follow-terminal", action="store_true")
     cfg = ap.parse_args()
     cfg.scale = max(1.0, cfg.scale)

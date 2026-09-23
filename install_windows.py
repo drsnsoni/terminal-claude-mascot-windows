@@ -89,7 +89,9 @@ def main():
         print(f"NOTE: replacing your existing statusLine config: {existing}")
     data["statusLine"] = {
         "type": "command",
-        "command": f"{py} {statusline}",
+        # With the overlay, the crab sits on top of the input box, so the
+        # statusline shows just the spinner label (--no-art).
+        "command": f"{py} {statusline}" + (" --no-art" if overlay_ok else ""),
         "padding": 0,
         "refreshInterval": 1,
     }
@@ -127,7 +129,7 @@ def main():
         pyw = shell_path(os.path.join(os.path.dirname(sys.executable), "pythonw.exe"))
         ov = shell_path(os.path.join(CLAUDE_DIR, "clawd_overlay_win.py"))
         print()
-        print("The floating crab starts automatically with each Claude Code session.")
+        print("The crab starts with each Claude Code session, on top of the input box.")
         print("Run it by hand with other options:")
         print(f"  {pyw} {ov}                     # bottom-right corner")
         print(f"  {pyw} {ov} --track-terminal    # stick to the focused terminal")
