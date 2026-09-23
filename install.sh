@@ -16,6 +16,7 @@ SETTINGS="$CLAUDE_DIR/settings.json"
 mkdir -p "$CLAUDE_DIR/bin"
 
 # 1. ---- statusline script -------------------------------------------------
+cp "$SCRIPT_DIR/clawd_scenes.py" "$CLAUDE_DIR/clawd_scenes.py"   # sprite + actions
 cp "$SCRIPT_DIR/clawd_statusline.py" "$CLAUDE_DIR/clawd_statusline.py"
 chmod +x "$CLAUDE_DIR/clawd_statusline.py"
 echo "Installed statusline script -> ~/.claude/clawd_statusline.py"
